@@ -1,0 +1,15 @@
+<table>
+  <% @range.each do |id| %>
+    <tr>
+      <td><img src="https://graph.facebook.com/<%= id %>/picture?type=large"></td>
+      <td>S<input type="checkbox" name="<%= id %>" value="<%= id %>" class="single_photo"></td>
+      <td>C<input type="checkbox" name="<%= id %>" value="couple" class="couple_photo"></td>
+      <td class="hidden <%= id %>"><a href="https://www.facebook.com/<%= id %>/" target="_blank">Visit Profile</a></td>
+      <td class="hidden <%= id %>"><input type="text" placeholder="Good picture url" class="<%= id %>"></td>
+      <td class="hidden <%= id %>"><input type="text" placeholder="Partner picture url" class="<%= id %>"></td>
+    </tr>
+  <% end %>
+</table>
+
+<button id="done">DONE</button>
+<button id="next_100">NEXT 100!</button>
