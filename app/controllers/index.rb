@@ -1,13 +1,22 @@
+require 'pry'
+
 get '/' do
   erb :index
 end
 
 post '/insert_info' do
-  params[:singles].each do |single|
-    Single.create!(fb_id: single[:id], pic_url: single[:pic_url]);
+  puts params
+  if params[:singles]
+    params[:singles].each do |single|
+      Single.create!(fb_id: single[1][:id], pic_url: single[1][:url]);
+    end
   end
-  params[:couples].each do |couple|
-    Couple.create!(original_fb_id: couple[:id], couple_pic: couple[:couple_pic_url], self_pic: couple[:self_pic_url], partner_pic: couple[:partner_pic_url])
+  if params[:couples]
+    params[:couples].each do |couple|
+      themself = Single.create(fb_id: couple[1][:id], pic_url: couple[1][:selfUrl])
+      partner = Single.create(pic_url: couple[1][:partnerUrl])
+      Couple.create!(original_fb_id: couple[1][:id], couple_pic: couple[1]["couplePicUrl"], self_id: themself.id, partner_id: partner.id)
+    end
   end
   # TODO: add photos to folder for storage, name being their id
 end
@@ -16,11 +25,6 @@ post '/get_pictures' do
   start = params[:starting].to_i
   finish = start + 100
   redirect "/get_pictures/#{start}/#{finish}"
-end
-
-get '/file/:filename' do
-  @fb_info = Parse.csv(params[:filename])
-  erb :csv_output
 end
 
 get '/get_pictures/:start/:finish' do

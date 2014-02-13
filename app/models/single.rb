@@ -1,3 +1,4 @@
 class Single < ActiveRecord::Base
-  validates :fb_id, uniqueness: true, presence: true
+  validates :fb_id, uniqueness: true
+  validates :pic_url, presence: true
 end
