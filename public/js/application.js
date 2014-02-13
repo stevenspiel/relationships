@@ -22,10 +22,7 @@ $(document).ready(function() {
     });
     var allCouples = $("input.couple_photo:checked");
     allCouples.each(function(i){
-      console.log(i);
-      console.log(allCouples[i]);
       var id = allCouples[i].name;
-      console.log(id);
       var selfUrl = $("input:text."+id)[0].value;
       var partnerUrl = $("input:text."+id)[1].value;
       coupleInfo.push({
@@ -35,13 +32,10 @@ $(document).ready(function() {
         couplePicUrl: "https://graph.facebook.com/"+id+"/picture?type=large"
       })
     });
-    console.log(singleInfo);
-    console.log(coupleInfo);
     $.ajax({
       type: 'post',
       url: '/insert_info',
-      data: ({singles:singleInfo,
-              couples:coupleInfo}),
+      data: ({singles:singleInfo, couples:coupleInfo}),
       success: function(){
         console.log("success");
       },
@@ -53,6 +47,7 @@ $(document).ready(function() {
 
   $('#done').click(function(){
     insertInfo();
+    document.location.href = "/";
   });
 
   $('#next_100').click(function(){
